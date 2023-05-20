@@ -1,22 +1,21 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import controleLivro from '.';
+import ControleLivro from '../../../../classes/controle/ControleLivros';
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const codigo = req.query.codigo as string;
 
+const controleLivro = new ControleLivro();
+
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    switch (req.method) {
-      case 'DELETE':
-        await controleLivro.excluir(codigo);
-        res.status(200).json({ message: 'Livro excluído com sucesso' });
-        break;
-      default:
-        res.status(405).end();
-        break;
+    if (req.method === 'DELETE') {
+      const codigo = Number(req.query.codigo);
+      controleLivro.excluir(codigo);
+      res.status(200).json({ message: 'Livro excluído com sucesso' });
+    } else {
+      res.status(405).end();
     }
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: 'Ocorreu um erro no servidor' });
+  } catch (error) {
+    res.status(500).json({ error: 'Ocorreu um erro no servidor' });
   }
 };
+
+export default handler;

@@ -2,12 +2,9 @@ import Link from 'next/link';
 
 export const Menu: React.FC = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-xl navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link href="/" legacyBehavior>
-          <a className="navbar-brand">Loja Next</a>
-        </Link>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="navbar-collapse">
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link href="/" legacyBehavior>

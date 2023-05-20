@@ -5,16 +5,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === 'GET') {
-    try {
+  try {
+    if (req.method === 'GET') {
       const codEditora = Number(req.query.codEditora);
-      const nomeEditora = await controleEditora.getNomeEditora(codEditora);
+      const nomeEditora = controleEditora.getNomeEditora(codEditora);
       res.status(200).json({ nome: nomeEditora });
-    } catch (error) {
-      res.status(500).json({ message: console.error });
+    } else {
+      res.status(405).end();
     }
-  } else {
-    res.setHeader('Allow', ['GET']);
-    res.status(405).json({ message: `Method ${req.method} Not Allowed` });
+  } catch (error) {
+    res.status(500).json({ error: 'Ocorreu um erro no servidor' });
   }
 }
